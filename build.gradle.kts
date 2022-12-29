@@ -3,11 +3,12 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
 	id("org.springframework.boot") version "2.4.3"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
+	id ("org.flywaydb.flyway") version "9.8.1"
 	kotlin("jvm") version "1.4.30"
 	kotlin("plugin.spring") version "1.4.30"
 }
 
-group = "de.imedia24"
+group = "main.kotlin.de.imedia24.shop"
 version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
@@ -34,10 +35,15 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("com.h2database:h2:1.4.200")
+	implementation("org.springdoc:springdoc-openapi-data-rest:1.6.0")
+	implementation("org.springdoc:springdoc-openapi-ui:1.6.0")
+	implementation("org.springdoc:springdoc-openapi-kotlin:1.6.0")
 
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation ("io.mockk:mockk:1.9.3")
 }
+
 
 tasks.withType<KotlinCompile> {
 	kotlinOptions {
@@ -48,4 +54,10 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+flyway {
+	url = "jdbc:h2:mem:testdb"
+	user = "sa"
+	password = "password"
 }

@@ -22,3 +22,6 @@ spring:
           batch_size: 1000
     hibernate:
       ddl-auto: validate
+  flyway:
+    enabled: true
+    locations: classpath:/db/migration

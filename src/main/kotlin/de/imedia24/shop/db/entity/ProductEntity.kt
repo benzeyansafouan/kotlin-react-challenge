@@ -1,5 +1,6 @@
 package de.imedia24.shop.db.entity
 
+import de.imedia24.shop.domain.product.ProductResponse
 import org.hibernate.annotations.UpdateTimestamp
 import java.math.BigDecimal
 import java.time.ZonedDateTime
@@ -16,13 +17,13 @@ data class ProductEntity(
     val sku: String,
 
     @Column(name = "name", nullable = false)
-    val name: String,
+    var name: String,
 
     @Column(name = "description")
-    val description: String? = null,
+    var description: String? = null,
 
     @Column(name = "price", nullable = false)
-    val price: BigDecimal,
+    var price: BigDecimal,
 
     @UpdateTimestamp
     @Column(name = "created_at", nullable = false)
@@ -30,5 +31,6 @@ data class ProductEntity(
 
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
-    val updatedAt: ZonedDateTime
-)
+    val updatedAt: ZonedDateTime?
+) {
+}

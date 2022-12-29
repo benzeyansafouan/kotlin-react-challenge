@@ -14,3 +14,26 @@ These additional references should also help you:
 
 * [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
 
+### set application in docker
+
+you have to go through the following steps:
+
+* compile and build the whole project with
+
+```console
+./gradlew build
+````
+* build jar file
+```console
+./gradlew bootJar
+````
+
+* build docker image 
+```console
+./gradlew bootbuildimage
+````
+
+* run docker image
+```console
+docker run docker.io/library/shop:0.0.1-SNAPSHOT
+````
