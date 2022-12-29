@@ -1,4 +1,4 @@
-package main.kotlin.de.imedia24.shop.controller
+package de.imedia24.shop.controller
 
 import de.imedia24.shop.domain.product.ProductResponse
 import de.imedia24.shop.service.ProductService
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
+@RequestMapping("/api")
 class ProductController(private val productService: ProductService) {
 
     private val logger = LoggerFactory.getLogger(ProductController::class.java)!!
