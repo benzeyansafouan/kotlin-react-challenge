@@ -45,3 +45,6 @@
 .pokemon-infos-container{
   text-align: center;
 }
+.table-row:hover{
+  cursor: pointer;
+}

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
 import {
+    Button,
     Paper,
     Table,
     TableBody,
@@ -11,35 +12,30 @@ import {
 } from '@mui/material';
 import Axios from 'axios';
 import AppService from'./App-Service';
+import {PokemonModel} from './Pokemon.model';
+import {PokemonDataModel} from './pokemonData.model';
 
 
 function App() {
-    let [rows, setRows] = useState([createData('', '')]);
+    let [rows, setRows] = useState([new PokemonDataModel('','')]);
+    let pokemonModel=new PokemonModel('','','','','','','')
     let [isShown, setIsShown] = useState(false);
     let [pokemonChosen, setPokemonChosen] = useState(false);
     let [pokemonName, setPokemonName] = useState('');
-    let [pokemon, setPokemon] = useState({
-        name: '',
-        species: '',
-        img: '',
-        hp: '',
-        attacks: '',
-        defense: '',
-        type: ''
-    });
+    let [pokemon, setPokemon] = useState({pokemonModel});
+
     let appService:AppService;
     const searchPokemon = () => {
         Axios.get(`https://pokeapi.co/api/v2/pokemon/`+pokemonName).then(
             (res) => {
-                setPokemon({
-                    name: pokemonName,
-                    species:res.data.species.name,
-                    img:res.data.sprites.front_default,
-                    hp: res.data.stats[0].base_stat,
-                    attacks: res.data.stats[1].base_stat,
-                    defense: res.data.stats[2].base_stat,
-                    type: res.data.types[0].type.name
-                });
+                pokemonModel= new PokemonModel(pokemonName
+                    ,res.data.species.name
+                    ,res.data.sprites.front_default
+                    ,res.data.stats[0].base_stat
+                    ,res.data.stats[1].base_stat
+                    ,res.data.stats[2].base_stat
+                    ,res.data.types[0].type.name);
+                setPokemon({pokemonModel});
                 setPokemonChosen(true);
             }
         )
@@ -50,12 +46,6 @@ function App() {
         setIsShown(current => !current);
     };
 
-    function createData(
-        name: string,
-        url: string
-    ) {
-        return {name, url};
-    }
 
     function fetchPokemons() {
         Axios.get(`https://pokeapi.co/api/v2/pokemon?limit=200`)
@@ -82,25 +72,25 @@ function App() {
                                 <div className="displayedSection">
                                     {!pokemonChosen ? (<h1>Please choose a pokemon</h1>):(
                                        <div className="pokemon-infos-container">
-                                           <h1>Pokemon Name: {pokemon.name}</h1>
-                                           <img src={pokemon.img}/>
-                                           <h3>Species: {pokemon.species}</h3>
-                                           <h3>Type: {pokemon.type}</h3>
-                                           <h4>Hp: {pokemon.hp}</h4>
-                                           <h4>Attack: {pokemon.attacks}</h4>
-                                           <h4>Defense: {pokemon.defense}</h4>
+                                           <h1>Pokemon Name: {pokemon.pokemonModel.name}</h1>
+                                           <img src={pokemon.pokemonModel.img}/>
+                                           <h3>Species: {pokemon.pokemonModel.species}</h3>
+                                           <h3>Type: {pokemon.pokemonModel.type}</h3>
+                                           <h4>Hp: {pokemon.pokemonModel.hp}</h4>
+                                           <h4>Attack: {pokemon.pokemonModel.attacks}</h4>
+                                           <h4>Defense: {pokemon.pokemonModel.defense}</h4>
                                        </div>
                                     )}
                                 </div>
                                 <div className="button-container">
-                                    <button className="button-close-popup"
+                                    <Button variant="contained" className="button-close-popup"
                                             onClick={() => setIsShown(false)}>Close
-                                    </button>
+                                    </Button>
                                 </div>
                             </div>
                         </div>}
                         {rows.map((row) => (
-                            <TableRow onClick={() => handleClick(row.name)}>
+                            <TableRow className="table-row" onClick={() => handleClick(row.name)}>
                                 <TableCell align="center">{row?.name}</TableCell>
                                 <TableCell align="center">{row?.url}</TableCell>
                             </TableRow>
