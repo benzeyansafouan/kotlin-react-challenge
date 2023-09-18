@@ -42,7 +42,7 @@ dependencies {
 	implementation("org.flywaydb:flyway-core:7.15.0")
 	testImplementation("junit:junit:4.13")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation ("io.mockk:mockk:1.9.3")
+	testImplementation ("io.mockk:mockk:1.13.4")
 }
 
 tasks.withType<Test> {
