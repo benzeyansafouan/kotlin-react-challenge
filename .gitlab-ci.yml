@@ -1,23 +1,28 @@
-build-job:
-  stage: build
-  script:
-    - echo "Hello, $GITLAB_USER_LOGIN!"
+# Define the stages of the CI/CD pipeline
+stages:
+  - test    # Test stage
+  - build   # Build stage
+  - deploy  # Deployment stage
 
+# Job to run unit tests
 test-job1:
-  stage: test
+  stage: test   # Run in the "test" stage
   script:
-    - echo "This job tests something"
+    - gradle test  # Run the Gradle test command
 
-test-job2:
-  stage: test
+# Job to build the project
+build-job:
+  stage: build  # Run in the "build" stage
   script:
-    - echo "This job tests something, but takes more time than test-job1."
-    - echo "After the echo commands complete, it runs the sleep command for 20 seconds"
-    - echo "which simulates a test that runs 20 seconds longer than test-job1"
-    - sleep 20
+    - gradle build  # Run the Gradle build command
+  artifacts:
+    paths:
+      - build/libs/*.jar  # Publish JAR files as artifacts for later stages
 
+# Job to deploy to production
 deploy-prod:
-  stage: deploy
+  stage: deploy    # Run in the "deploy" stage
   script:
-    - echo "This job deploys something from the $CI_COMMIT_BRANCH branch."
-  environment: production
+    - gradle deploy  # Run the Gradle deploy command
+  environment:
+    name: production  # Define the environment as "production"

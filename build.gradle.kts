@@ -4,13 +4,14 @@ plugins {
 	id("org.springframework.boot") version "2.4.3"
 	id("io.spring.dependency-management") version "1.0.11.RELEASE"
 	id ("org.flywaydb.flyway") version "9.8.1"
-	kotlin("jvm") version "1.4.30"
-	kotlin("plugin.spring") version "1.4.30"
+	kotlin("jvm") version "1.6.0"
+	kotlin("plugin.spring") version "1.6.0"
 }
 
 group = "main.kotlin.de.imedia24.shop"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_17
+java.targetCompatibility = JavaVersion.VERSION_17
 
 configurations {
 	compileOnly {
@@ -38,23 +39,23 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-data-rest:1.6.0")
 	implementation("org.springdoc:springdoc-openapi-ui:1.6.0")
 	implementation("org.springdoc:springdoc-openapi-kotlin:1.6.0")
-
-
+	implementation("org.flywaydb:flyway-core:7.15.0")
+	testImplementation("junit:junit:4.13")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation ("io.mockk:mockk:1.9.3")
-}
-
-
-tasks.withType<KotlinCompile> {
-	kotlinOptions {
-		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "1.8"
-	}
 }
 
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+tasks.withType<KotlinCompile> {
+	kotlinOptions {
+		jvmTarget = "17"
+		freeCompilerArgs = listOf("-Xjsr305=strict")
+	}
+}
+
 
 flyway {
 	url = "jdbc:h2:mem:testdb"

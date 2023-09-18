@@ -14,26 +14,24 @@ These additional references should also help you:
 
 * [Gradle Build Scans – insights for your project's build](https://scans.gradle.com#gradle)
 
-### set application in docker
+# Set application in docker
 
-you have to go through the following steps:
+Instructions for building and running the application using Docker containers.
 
-* compile and build the whole project with
+## Docker Containerization
 
-```console
-./gradlew build
-````
-* build jar file
-```console
-./gradlew bootJar
-````
+### Build Docker Image
 
-* build docker image 
-```console
-./gradlew bootbuildimage
+To build a Docker image for this application, use the following command:
+
+```bash
+docker build -t imedia24-backend-challenge .
 ````
 
-* run docker image
-```console
-docker run docker.io/library/shop:0.0.1-SNAPSHOT
+### Run Docker Container
+
+To run the application as a Docker container, use the following command:
+
+```bash
+docker run -p 8080:8080 imedia24-backend-challenge
 ````
